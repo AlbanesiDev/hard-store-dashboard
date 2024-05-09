@@ -1,3 +1,8 @@
-@import "primeng/resources/themes/lara-dark-blue/theme.css";
+@import "primeng/resources/themes/aura-dark-noir/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
+
+body {
+  margin: 0;
+  background-color: var(--primary-section);
+}
