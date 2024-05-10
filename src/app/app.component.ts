@@ -14,11 +14,11 @@ import { ConfirmationService, MessageService } from "primeng/api";
   template: `
     <p-toast />
     <p-confirmDialog />
-    <div class="flex gap-4">
+    <div class="flex gap-4 px-4">
       @if (router.url.startsWith("/dashboard")) {
         <app-sidebar />
       }
-      <div class="w-full py-4 pr-4">
+      <div class="w-full py-4">
         <router-outlet />
       </div>
     </div>
