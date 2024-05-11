@@ -13,9 +13,7 @@ import { AuthService } from "../../core/services/auth.service";
   imports: [CommonModule, RouterModule, ButtonModule, DividerModule, ConfirmDialogModule],
   template: `
     <div class="sticky top-0 h-screen py-4" style="min-width: 20rem;">
-      <div
-        class="card flex flex-column justify-content-between w-full h-full"
-      >
+      <div class="card flex flex-column justify-content-between w-full h-full">
         <div class="flex flex-column gap-3">
           @for (sections of sidebarItems; track $index) {
             <h2 class="text-lg m-0">{{ sections.title }}</h2>
@@ -24,8 +22,8 @@ import { AuthService } from "../../core/services/auth.service";
                 <p-button
                   styleClass="w-full text-left"
                   severity="secondary"
-                  [text]="true"
                   [icon]="btn.icon"
+                  [text]="true"
                   [label]="btn.label"
                   [routerLink]="btn.link"
                 />
@@ -63,7 +61,18 @@ export class SidebarComponent {
     },
     {
       title: "Productos",
-      btn: [{ label: "Agregar productos", icon: "pi pi-box", link: "dashboard/productos" }],
+      btn: [{ label: "Gestionar productos", icon: "pi pi-box", link: "dashboard/gestionar-productos" }],
+    },
+    {
+      title: "Pagina principal",
+      btn: [{ label: "Banners", icon: "pi pi-images", link: "dashboard/banners" }],
+    },
+    {
+      title: "Tickets",
+      btn: [
+        { label: "Abiertos", icon: "pi pi-inbox", link: "dashboard/tickets-abiertos" },
+        { label: "Cerrados", icon: "pi pi-list-check", link: "dashboard/tickets-cerrados" },
+      ],
     },
   ];
 

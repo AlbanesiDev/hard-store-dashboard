@@ -22,9 +22,14 @@ export const routes: Routes = [
         loadComponent: () => import("./dashboard/dashboard.component"),
       },
       {
-        path: "productos",
-        title: "Dashboard | Productos",
+        path: "gestionar-productos",
+        title: "Dashboard | Gestionar productos",
         loadComponent: () => import("./dashboard/sections/products/products.component"),
+      },
+      {
+        path: "banners",
+        title: "Dashboard | Banners",
+        loadComponent: () => import("./dashboard/sections/banners/banners.component"),
       },
     ],
   },
