@@ -8,8 +8,8 @@ import { ChartModule } from "primeng/chart";
   standalone: true,
   imports: [CommonModule, MenuModule, ChartModule],
   template: `
-    <div class="flex flex-column gap-3 h-full w-full">
-      <div class="flex gap-3">
+    <div class="flex flex-column gap-4 h-full w-full">
+      <div class="flex gap-4">
         @for (item of dashboardData()[0].card; track $index) {
           <div class="card w-full h-10rem">
             <div class="flex justify-content-between align-items-start h-full">
@@ -28,7 +28,7 @@ import { ChartModule } from "primeng/chart";
           </div>
         }
       </div>
-      <div class="flex gap-3">
+      <div class="flex gap-4">
         <div class="card w-6">
           <div class="flex justify-content-between align-items-center mb-5">
             <h2 class="text-lg text-color-secondary font-normal m-0 mb-3">Productos más vendidos</h2>
