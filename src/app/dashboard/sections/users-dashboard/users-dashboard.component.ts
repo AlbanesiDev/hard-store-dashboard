@@ -6,6 +6,8 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { DialogService } from "../../../core/services/dialog.service";
 import { TableComponent } from "../../../components/table/table.component";
 import { AddUserComponent } from "./abm/add-user/add-user.component";
+import { EditUserComponent } from "./abm/edit-user/edit-user.component";
+import { AuthService } from "../../../core/services/auth.service";
 
 export interface TableUi {
   isProduct: boolean;
@@ -17,26 +19,33 @@ export interface TableUi {
 
 @Component({
   standalone: true,
-  imports: [CommonModule, TableControlsComponent, TableComponent, AddUserComponent],
+  imports: [CommonModule, TableControlsComponent, TableComponent, AddUserComponent, EditUserComponent],
   template: `
     <app-add-user />
+    <app-edit-user />
     <div class="flex flex-column gap-4">
       <app-table-controls
         [disabledDeleteSig]="disabledDeleteSig()"
         (createDataOut)="createUser()"
-        (deleteDataOut)="deleteUser()"
-        (exportDataOut)="importUsers()"
-        (importDataOut)="exportUsers()"
+        (deleteDataOut)="deleteMultipleUsers()"
+        (importDataOut)="importUsers()"
+        (exportDataOut)="exportUsers()"
       />
-      <app-table [data]="usersSig()" [tableUi]="uiData[0]" />
+      <app-table
+        [data]="usersSig()"
+        [tableUi]="uiData[0]"
+        (editDataOut)="editUser($event)"
+        (deleteDataOut)="deleteUser($event)"
+      />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class UsersDashboardComponent implements OnInit {
-  public dialogService = inject(DialogService);
-  public usersService = inject(UsersService);
-  public destroyRef = inject(DestroyRef);
+  public dialogService: DialogService = inject(DialogService);
+  public usersService: UsersService = inject(UsersService);
+  public authService: AuthService = inject(AuthService);
+  public destroyRef: DestroyRef = inject(DestroyRef);
 
   uiData: TableUi[] = [
     {
@@ -45,10 +54,10 @@ export default class UsersDashboardComponent implements OnInit {
       currentPage: "Usuarios",
       filter: ["uid", "name", "surname", "email"],
       th: [
-        { column_name: "Nombre", pSortableColumn: "name", width: "" },
-        { column_name: "Apellido", pSortableColumn: "surname", width: "" },
-        { column_name: "Correo electronico", pSortableColumn: "email", width: "" },
-        { column_name: "Rol", pSortableColumn: "rol", width: "" },
+        { column_name: "Nombre", pSortableColumn: "name", value: "name" },
+        { column_name: "Apellido", pSortableColumn: "surname", value: "surname" },
+        { column_name: "Correo electronico", pSortableColumn: "email", value: "email" },
+        { column_name: "Rol", pSortableColumn: "rol_value", value: "rol_label" },
       ],
     },
   ];
@@ -74,12 +83,22 @@ export default class UsersDashboardComponent implements OnInit {
       });
   }
 
-  createUser() {
+  createUser(): void {
     this.dialogService.openCreateUser();
   }
-  deleteUser() {
-    console.log("se elimino");
+
+  editUser(data: any): void {
+    this.dialogService.setUserData(data);
+    this.dialogService.openEditUser();
   }
+
+  deleteUser(data: any) {
+    this.authService
+    this.usersService.deleteUser("users-dashboard", data);
+  }
+
+  deleteMultipleUsers() {}
+
   importUsers() {
     console.log("se importo");
   }
